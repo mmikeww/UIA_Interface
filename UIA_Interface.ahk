@@ -93,7 +93,10 @@ class UIA_Interface extends UIA_Base {
 	CreatePropertyCondition(propertyId, ByRef var, type="Variant") {
 		if (type!="Variant")
 			UIA_Variant(var,type,var)
-		return UIA_Hr(DllCall(this.__Vt(23), "ptr",this.__Value, "int",propertyId, "ptr",&var, "ptr*",out))? new UIA_PropertyCondition(out):
+		if (A_PtrSize = 4)
+			return UIA_Hr(DllCall(this.__Vt(23), "ptr",this.__Value, "int",propertyId, "int64",NumGet(var, 0, "int64"), "int64", NumGet(var, 8, "int64"), "ptr*",out))? new UIA_PropertyCondition(out):
+		else
+			return UIA_Hr(DllCall(this.__Vt(23), "ptr",this.__Value, "int",propertyId, "ptr",&var, "ptr*",out))? new UIA_PropertyCondition(out):
 	}
 	CreatePropertyConditionEx(propertyId, ByRef var, type="Variant", flags=0x1) { ; NOT TESTED
 	; PropertyConditionFlags_IgnoreCase = 0x1
