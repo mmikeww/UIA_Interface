@@ -241,7 +241,7 @@ class UIA_Element extends UIA_Base {
 		static tc	; TrueCondition
 		if !tc
 			tc:=this.__uia.CreateTrueCondition()
-		return UIA_Hr(DllCall(this.__Vt(6), "ptr",this.__Value, "uint",scope, "ptr",(c=""?tc:c).__Value, "ptr*",out))? UIA_ElementArray(out):
+		return UIA_Hr(DllCall(this.__Vt(6), "ptr",this.__Value, "uint",scope, "ptr",(c=""?tc:c).__Value, "ptr*",out))? new UIA_ElementArray(out):
 	}
 	;~ Find (First/All, Element/Children/Descendants/Parent/Ancestors/Subtree, Conditions)
 	;~ FindFirstBuildCache 	7	IUIAutomationElement
