@@ -608,7 +608,37 @@ class UIA_TogglePattern extends UIA_Base
 
 ;~ class UIA_TransformPattern extends UIA_Base {10016
 ;~ class UIA_TransformPattern2 extends UIA_Base {10028
-;~ class UIA_ValuePattern extends UIA_Base {10002
+
+class UIA_ValuePattern extends UIA_Base
+{
+   ;// https://docs.microsoft.com/en-us/windows/win32/api/uiautomationclient/nn-uiautomationclient-iuiautomationvaluepattern
+   ;// sample notepad code:
+   ; F9::
+   ;    MouseGetPos,,, mhwnd
+   ;    notepd := uia.ElementFromHandle(mhwnd)
+   ;    EditCtrlCondition := uia.CreatePropertyCondition(30003, 50004, 3)
+   ;    editelement := notepd.FindFirst(EditCtrlCondition, TreeScope_Descendants := 0x4)
+   ;    valueptrn := editelement.GetCurrentPatternAs("Value")
+   ;    valueptrn.SetValue("Hello world")
+   ;    msgbox % valueptrn.CurrentValue "`n" editelement.GetCurrentPropertyValue(30045)
+   ;    legacy := editelement.GetCurrentPatternAs("LegacyIAccessible")
+   ;    legacy.SetValue("hello world 2")
+   ;    msgbox % legacy.CurrentValue "`n" editelement.GetCurrentPropertyValue(30045)
+   ; return
+
+   static __IID := "{a94cd8b1-0844-4cd6-9d2d-640537ab39e9}"
+   , __PatternID := 10002
+   , __Properties := "CurrentValue,4,BSTR`r`n"
+                   . "CurrentIsReadOnly,5,BOOL`r`n"
+                   . "CachedValue,6,BSTR`r`n"
+                   . "CachedIsReadOnly,7,BOOL"
+
+   SetValue(value)
+   {
+      return UIA_Hr(DllCall(this.__Vt(3), "ptr", this.__Value, "str", value))
+   }
+}
+
 ;~ class UIA_VirtualizedItemPattern extends UIA_Base {10020
 ;~ class UIA_WindowPattern extends UIA_Base {10009
 ;~ class UIA_AnnotationPattern extends UIA_Base {10023		; Windows 8 [desktop apps only]
